@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Kalman exercise</title>
+<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
+</script>
+<script type="text/javascript"
+  src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<style type="text/css">
+<!--
+body { background-color:#ededed; font:normal 12px/18px Arial, Helvetica, sans-serif; }
+h1 { display:block; width:600px; margin:20px auto; padding-bottom:20px; font:normal 24px/30px Georgia, "Times New Roman", Times, serif; color:#333; text-shadow: 1px 2px 3px #ccc; border-bottom:1px solid #cbcbcb; }
+#container { width:600px; margin:0 auto; }
+#myCanvas { background:#fff; border:1px solid #cbcbcb; }
+#nav { display:block; width:100%; text-align:center; }
+#nav li { display:block; font-weight:bold; line-height:21px; text-shadow:1px 1px 1px #fff; width:100px; height:21px; padding:5px; margin:0 10px; background:#e0e0e0; border:1px solid #ccc; -moz-border-radius:4px;-webkit-border-radius:4px; border-radius:4px; float:left; }
+#nav li a { color:#000; display:block; text-decoration:none; width:100%; height:100%; }
+-->
+</style>
+</head>
+<body>
+
+<h1>Kalman filters</h1>
+<div id="container">
+<h2>Intro</h2>
+
+Quick explanation of how a Kalman filter works just to make sure I understood it and I don't forget it, and also for others to learn.
+</br>
+</br>
+<h3>Combining 2 sensor measurements</h3>
+Before we understand how it works let's look at a simpler problem. Suppose we have 2 sensors, each one with its own average $\mu$ and variance $\sigma^2$.
+<ul>
+<li>sensor a: $(\mu_a,\sigma_a^2)$</li>
+<li>sensor b: $(\mu_b,\sigma_b^2)$</li>
+</ul>
+
+Could we combine those 2 measurements in anyway so we get a much precise measurement? Yes indeed, those readings represent gaussians and combining them means multiplying them, the result is given by the following formula:
+
+
+$$(\mu_{new},\sigma_{new}^2)=\Bigg(\mu_a + \frac{\sigma_a^2 (\mu_b – \mu_a)} {\sigma_a^2 + \sigma_b^2}, \sigma_a^2 – \frac{\sigma_a^4} {\sigma_a^2 + \sigma_b^2}\Bigg)$$
+
+In the literature we usually find the above formula written this way:
+
+$$(\mu_{new},\sigma_{new}^2)=(\mu_a + \color{fuchsia}k(\mu_b – \mu_a), \sigma_a^2 – \color{fuchsia}k\sigma_a^2), \quad \textrm{where} \quad \color{fuchsia}k=\frac{\sigma_a^2}{\sigma_a^2 + \sigma_b^2} 
+$$
+
+and $\color{fuchsia}k$ is called the Kalman gain.
+
+Note taht if our two sensors were IMUs (Inertial measurements Units) they would return a vector with 6 components $(x,y,z,w_x,w_y,w_z)$. In this case the average $\mu$ would be a 6 component vector and the variance $\sigma$ would be a 6x6 matrix. 
+<br/><br/>
+
+In a rocket we'd need to read and combine these measurements every instant t :  $(\mu(t),\sigma^2(t))$
+
+</br>
+</br>
+
+<h3>What if we can only carry one sensor?</h3>
+
+
+That is what happened exactly in the Apollo rocket, back in the 60s the IMUs were veeery heavy and they could only carry one. 
+</br>
+</br>
+Kalman thought that despite only having one IMU you could still get 2 different readings. One reading would come from IMU itself 
+$$(\mu_{a}(t),\sigma_{a}^2(t))$$
+ and the second reading could just be extrapolated from the previous reading 
+$$(\mu_{a}(t-1),\sigma_{a}^2(t-1))$$ 
+In the case of a rocket, and thanks to Newtown, we can do that by just using some simple math. Kalman requires the extrapolation to be linear, and that means that to compute the estimated value we need to use matrix $M$.
+With those requirements the reading of our virtual sensor $v$ would be:
+
+$$(\mu_{v},\sigma_{v}^2(t)) = (M\mu_a(t-1),M\sigma_{a}^{2}(t-1)M^{-1})$$
+
+
+And now, thanks to the first part of this article we know how to combine this measurement with the sensor a.
+
+
+</br>
+</br>
+<h2>Contact/Questions:</h2>
+ &lt;my_github_account_username&gt;$@gmail.com$.
+</br>
+</br>
+</div>
+</body>
+</html>
