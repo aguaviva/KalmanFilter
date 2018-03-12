@@ -79,7 +79,7 @@ $$(\mu_{new},\sigma_{new}^2)=(\mu_a + \color{fuchsia}k(\mu_v – \mu_a), \sigma_
 
 And you should obtain the same equations wikipedia gives you
 
-<h2>Extended kalman<h2>
+<h3>Extended kalman</h3>
  
 Remenber that we mentioned that the Kalman filter requires the prediction formula to be linear, that meant this function had to be expressed as a matrix \(M\). What happens if our prediction formula is not linear? Well, we use Taylor's to hammer it down until it becomes a matrix, and that is called linearization:
  
@@ -88,7 +88,7 @@ $$F(x) \approx F(p) + \nabla F|_p \dot (x-p)$$
 And then plug that into the regular Kalman filter, rinse and repeat. This has the added cost that we need to compute and evaluate the jacobian every instant of time.
 </br>
 </br>
-<h2>SLAM (or how self-driving cars work become aware of their surroundings)<h2>
+<h3>SLAM (or how self-driving cars work become aware of their surroundings)</h3>
 
 So far the state of my system is based only on what I measure from my IMU but, could we do better? 
 </br>
