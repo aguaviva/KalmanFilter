@@ -4,15 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Kalman exercise</title>
 <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-  processEscapes: true
- }
-});
-</script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
 <style type="text/css">
 <!--
 body { background-color:#ededed; font:normal 12px/18px Arial, Helvetica, sans-serif; }
@@ -35,7 +27,7 @@ Quick explanation of how a Kalman filter works just to make sure I understood it
 </br>
 </br>
 <h3>Combining 2 sensor measurements</h3>
-Before we understand how it works let's look at a simpler problem. Suppose we have 2 sensors, each one with its own average $\mu$ and variance $\sigma^2$.
+Before we understand how it works let's look at a simpler problem. Suppose we have 2 sensors, each one with its own average \(\mu\) and variance $\sigma^2$.
 <ul>
 <li>sensor a: $(\mu_a,\sigma_a^2)$</li>
 <li>sensor b: $(\mu_b,\sigma_b^2)$</li>
