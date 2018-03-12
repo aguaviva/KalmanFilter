@@ -32,7 +32,6 @@ Before we understand how it works let's look at a simpler problem. Suppose we ha
 
 Could we combine those 2 measurements in anyway so we get a much precise measurement? Yes indeed, those readings represent gaussians and combining them means multiplying them, the result is given by the following formula:
 
-
 $$(\mu_{new},\sigma_{new}^2)=\Bigg(\mu_a + \frac{\sigma_a^2 (\mu_b – \mu_a)} {\sigma_a^2 + \sigma_b^2}, \sigma_a^2 – \frac{\sigma_a^4} {\sigma_a^2 + \sigma_b^2}\Bigg)$$
 
 In the literature we usually find the above formula written this way:
@@ -58,10 +57,12 @@ Kalman thought that despite only having one IMU you could still get 2 different 
 $$(\mu_{a}(t),\sigma_{a}^2(t))$$
  and the second reading could just be extrapolated from the previous reading 
 $$(\mu_{a}(t-1),\sigma_{a}^2(t-1))$$ 
-In the case of a rocket, and thanks to Newtown, we can do that by just using some simple math. Kalman requires the extrapolation to be linear, and that means that to compute the estimated value we need to use matrix \(M\).
+In the case of a rocket, and thanks to Newtown, our prediction formula \(F\) could be as simple as \(s=v\dot t\). The most important thing is that \(F\) is linear, otherwise the math becomes impossible, and in the practice that means that \(F\) could be expressed as a matrix \(M\). 
 With those requirements the reading of our virtual sensor \(v\) would be:
 
 $$(\mu_{v},\sigma_{v}^2(t)) = (M\mu_a(t-1),M\sigma_{a}^{2}(t-1)M^{-1})$$
+
+</br>
 
 <h3>Putting it all together</h3>
 
@@ -78,7 +79,27 @@ $$(\mu_{new},\sigma_{new}^2)=(\mu_a + \color{fuchsia}k(\mu_v – \mu_a), \sigma_
 
 And you should obtain the same equations wikipedia gives you
 
+<h2>Extended kalman<h2>
+ 
+Remenber that we mentioned that the Kalman filter requires the prediction formula to be linear, that meant this function had to be expressed as a matrix \(M\). What happens if our prediction formula is not linear? Well, we use Taylor's to hammer it down until it becomes a matrix, and that is called linearization:
+ 
+$$F(x) \approx F(p) + \nabla F|_p \dot (x-p)$$
+ 
+And then plug that into the regular Kalman filter, rinse and repeat. This has the added cost that we need to compute and evaluate the jacobian every instant of time.
+</br>
+</br>
+<h2>SLAM (or how self-driving cars work become aware of their surroundings)<h2>
 
+So far the state of my system is based only on what I measure from my IMU but, could we do better? 
+</br>
+</br>
+Probably yes! We humans besides using our internal IMUs we use many visual clues/features that we make part of our \(state\) to correct our IMU estimates.
+We also do the opposite, and we use our IMU to better estimate the position of those features/clues. 
+This is exactly what SLAM does, at its core it is just a Kalman filter with the twist that each time it finds a reliable visual clue it treats it as a sensor and makes it part of its state, a thing that allow 
+us to tell our position much better and build a map. 
+</br>
+</br>
+I'll be very glad if you ever build a self-driving car based on this explanation so please let me know :)
 </br>
 </br>
 <h2>Contact/Questions:</h2>
