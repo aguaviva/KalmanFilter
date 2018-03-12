@@ -11,9 +11,6 @@ body { background-color:#ededed; font:normal 12px/18px Arial, Helvetica, sans-se
 h1 { display:block; width:600px; margin:20px auto; padding-bottom:20px; font:normal 24px/30px Georgia, "Times New Roman", Times, serif; color:#333; text-shadow: 1px 2px 3px #ccc; border-bottom:1px solid #cbcbcb; }
 #container { width:600px; margin:0 auto; }
 #myCanvas { background:#fff; border:1px solid #cbcbcb; }
-#nav { display:block; width:100%; text-align:center; }
-#nav li { display:block; font-weight:bold; line-height:21px; text-shadow:1px 1px 1px #fff; width:100px; height:21px; padding:5px; margin:0 10px; background:#e0e0e0; border:1px solid #ccc; -moz-border-radius:4px;-webkit-border-radius:4px; border-radius:4px; float:left; }
-#nav li a { color:#000; display:block; text-decoration:none; width:100%; height:100%; }
 -->
 </style>
 </head>
@@ -54,7 +51,6 @@ In a rocket we'd need to read and combine these measurements every instant \(t\)
 
 <h3>What if we can only carry one sensor?</h3>
 
-
 That is what happened exactly in the Apollo rocket, back in the 60s the IMUs were veeery heavy and they could only carry one. 
 </br>
 </br>
@@ -67,7 +63,21 @@ With those requirements the reading of our virtual sensor \(v\) would be:
 
 $$(\mu_{v},\sigma_{v}^2(t)) = (M\mu_a(t-1),M\sigma_{a}^{2}(t-1)M^{-1})$$
 
-And now, thanks to the first part of this article we know how to combine this measurement with the sensor a.
+<h3>Putting it all together</h3>
+
+We have then 2 sensors, the real one and the virtual one (that extrapolates data from the previous instant): 
+
+<ul>
+<li>sensor a: \((\mu_a,\sigma_a^2)\)</li>
+<li>sensor v: \((\mu_{v},\sigma_{v}^2(t)) = (M\mu_a(t-1),M\sigma_{a}^{2}(t-1)M^{-1})\)</li>
+</ul>
+
+now substitute here:
+
+$$(\mu_{new},\sigma_{new}^2)=(\mu_a + \color{fuchsia}k(\mu_v – \mu_a), \sigma_a^2 – \color{fuchsia}k\sigma_a^2), \quad \textrm{where} \quad \color{fuchsia}k=\frac{\sigma_a^2}{\sigma_a^2 + \sigma_v^2} $$
+
+And you should obtain the same equations wikipedia gives you
+
 
 </br>
 </br>
