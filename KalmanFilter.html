@@ -40,7 +40,7 @@ $$(\mu_{new},\sigma_{new}^2)=(\mu_a + \color{fuchsia}k(\mu_b – \mu_a), \sigma_
 
 and \(\color{fuchsia}k\) is called the Kalman gain.
 
-Note taht if our two sensors were IMUs (Inertial measurements Units) they would return a vector with 6 components \((x,y,z,w_x,w_y,w_z)\). In this case the average \(\mu\) would be a 6 component vector and the variance \(\sigma\) would be a 6x6 matrix. 
+Note that if our two sensors were IMUs (Inertial measurements Units) they would return a vector with 6 components \((x,y,z,w_x,w_y,w_z)\). In this case the average \(\mu\) would be a 6 component vector and the variance \(\sigma\) would be a 6x6 matrix. 
 <br/><br/>
 
 In a rocket we'd need to read and combine these measurements every instant \(t\) :  \((\mu(t),\sigma^2(t))\)
