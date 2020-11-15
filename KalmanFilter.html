@@ -37,8 +37,12 @@ In the literature we usually find the above formula written this way:
 
 $$(\mu_{new},\sigma_{new}^2)=(\mu_a + \color{fuchsia}k(\mu_b – \mu_a), \sigma_a^2 – \color{fuchsia}k\sigma_a^2), \quad \textrm{where} \quad \color{fuchsia}k=\frac{\sigma_a^2}{\sigma_a^2 + \sigma_b^2} $$
 
-and \(\color{fuchsia}k\) is called the Kalman gain.
+and \(\color{fuchsia}k\) is called the Kalman gain. \(\mu_{new}\) is more clear if we express it this way:
 
+$$\mu_{new}= (1-\color{fuchsia}k)\mu_a + \color{fuchsia}k(\mu_b) $$ 
+ 
+This reminds us of a linear interpolation \((1-t)a+(t)b\), hence k will determine the weight of each sensor.
+ 
 Note that if our two sensors were IMUs (Inertial measurements Units) they would return a vector with 6 components \((x,y,z,w_x,w_y,w_z)\). In this case the average \(\mu\) would be a 6 component vector and the variance \(\sigma\) would be a 6x6 matrix. 
 
 <br/><br/>
